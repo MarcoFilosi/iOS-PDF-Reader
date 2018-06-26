@@ -25,11 +25,13 @@ internal final class PDFThumbnailCollectionViewController: UICollectionViewContr
             guard let collectionView = collectionView else { return }
             guard let pageImages = pageImages else { return }
             guard pageImages.count > 0 else { return }
+            collectionView.reloadData()
             let curentPageIndexPath = IndexPath(row: currentPageIndex, section: 0)
             if !collectionView.indexPathsForVisibleItems.contains(curentPageIndexPath) {
+                // IMPORTANT: scrollToItem MUST be placed after reloadData to avoid possible app crashes
+                // https://stackoverflow.com/questions/41328421/collectionview-scrolltoitematindexpath-crashes-app
                 collectionView.scrollToItem(at: curentPageIndexPath, at: .centeredHorizontally, animated: true)
             }
-            collectionView.reloadData()
         }
     }
     
